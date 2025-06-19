@@ -7,9 +7,29 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SayItWell'),
+        backgroundColor: Colors.black87,  // black background
+        title: const Text(
+          'SayItWell',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+            color: Colors.white,
+          ),
+        ),
         centerTitle: true,
+        elevation: 1,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none),
+            tooltip: 'Notifications',
+            onPressed: () {
+              // TODO: notification action
+            },
+          ),
+        ],
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -39,43 +59,25 @@ class HomeScreen extends StatelessWidget {
   Widget _buildExerciseCard(String title) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Text(
+      child: SizedBox(
+        width: 300,
+        height: 130,
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Center(
+              child: Text(
                 title,
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // no functionality for now
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    "Start",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
