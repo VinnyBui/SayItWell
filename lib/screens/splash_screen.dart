@@ -13,7 +13,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
@@ -23,12 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.white,
       body: Center(
         child: Text(
           'SayItWell',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontSize: 36,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
