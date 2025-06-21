@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SayItWell',
       theme: ThemeData(
-        highlightColor: Colors.transparent,    // Remove highlight
+        highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
       ),
       debugShowCheckedModeBanner: false,
