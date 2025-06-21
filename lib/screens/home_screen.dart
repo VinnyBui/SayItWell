@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../widgets/exercise_card.dart';
+import 'progress_screen.dart';
+import 'premium_screen.dart';
+import 'settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +13,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
+
+  // List of screens/widgets for each tab
+  final List<Widget> _screens = [
+    const HomeContent(),
+    const ProgressScreen(),
+    const PremiumScreen(),
+    const SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,31 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
-      body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              "Today's Exercises",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 24),
-            _buildExerciseCard("Tongue Twister Clarity"),
-            _buildExerciseCard("Volume / Projection Drill"),
-            _buildExerciseCard("Slow-Down Drill"),
-            _buildExerciseCard("Repeat After Me"),
-            const SizedBox(height: 24),
-            const Text(
-              "Stay consistent and improve your clarity every day.",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-
+      body: _screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black87,
         selectedItemColor: Colors.white,
@@ -73,10 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),
             label: 'Progress',
@@ -93,31 +78,35 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
 
-  Widget _buildExerciseCard(String title) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-      child: SizedBox(
-        width: 300,
-        height: 130,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+// Home Content Widget
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Text(
+            "Today's Exercises",
+            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
-          elevation: 3,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Center(
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+          const SizedBox(height: 24),
+          const ExerciseCard(title: "Tongue Twister Clarity"),
+          const ExerciseCard(title: "Volume / Projection Drill"),
+          const ExerciseCard(title: "Slow-Down Drill"),
+          const ExerciseCard(title: "Repeat After Me"),
+          const SizedBox(height: 24),
+          const Text(
+            "Stay consistent and improve your clarity every day.",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
-        ),
+        ],
       ),
     );
   }
