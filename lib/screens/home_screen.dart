@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/exercise_card.dart';
+import '../data/sample_exercises.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
 import 'settings_screen.dart';
@@ -86,7 +87,7 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,10 +97,10 @@ class HomeContent extends StatelessWidget {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
-          const ExerciseCard(title: "Tongue Twister Clarity"),
-          const ExerciseCard(title: "Volume / Projection Drill"),
-          const ExerciseCard(title: "Slow-Down Drill"),
-          const ExerciseCard(title: "Repeat After Me"),
+          ExerciseCard(exercise: SampleExercises.exercises[0]),
+          ExerciseCard(exercise: SampleExercises.exercises[1]),
+          ExerciseCard(exercise: SampleExercises.exercises[2]),
+          ExerciseCard(exercise: SampleExercises.exercises[3]),
           const SizedBox(height: 24),
           const Text(
             "Stay consistent and improve your clarity every day.",
