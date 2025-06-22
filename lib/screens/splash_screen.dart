@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animated_splash/flutter_animated_splash.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:lottie/lottie.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -10,15 +11,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplash(
-      type: Transition.fade,
-      curve:Curves.fastLinearToSlowEaseIn,
-      navigator:const HomeScreen(),
-      durationInSeconds:2,
-      child:Text("Your Splash"),
+    return AnimatedSplashScreen(
+      splash: Lottie.asset('assets/animations/animation.json'),
+      nextScreen: const HomeScreen(),
+      splashIconSize: 200,
+      duration: 3000,
+      splashTransition: SplashTransition.fadeTransition,
     );
+
   }
 }
