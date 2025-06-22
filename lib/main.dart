@@ -14,95 +14,95 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SayItWell',
       theme: ThemeData(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        // Text Theme using Google Fonts
-        textTheme: GoogleFonts.poppinsTextTheme(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF3F51B5),
+          brightness: Brightness.light,
+        ).copyWith(
+          primary: const Color(0xFF3F51B5),
+          secondary: const Color(0xFFFF9800),
+          onSurface: const Color(0xFF1A1A1A),
+        ),
+
+        textTheme: GoogleFonts.manropeTextTheme(
           Theme.of(context).textTheme,
         ).copyWith(
-          // Display styles (large text)
-          displayLarge: GoogleFonts.poppins(
+          // Headings: Manrope (clean, modern, great for entire UI)
+          displayLarge: GoogleFonts.manrope(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          displayMedium: GoogleFonts.poppins(
+          displayMedium: GoogleFonts.manrope(
             fontSize: 28,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          displaySmall: GoogleFonts.poppins(
+          displaySmall: GoogleFonts.manrope(
             fontSize: 24,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-
-          // Headline styles
-          headlineLarge: GoogleFonts.poppins(
+          headlineLarge: GoogleFonts.manrope(
             fontSize: 22,
             fontWeight: FontWeight.w600,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          headlineMedium: GoogleFonts.poppins(
+          headlineMedium: GoogleFonts.manrope(
             fontSize: 20,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          headlineSmall: GoogleFonts.poppins(
+          headlineSmall: GoogleFonts.manrope(
             fontSize: 18,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-
-          // Title styles
-          titleLarge: GoogleFonts.poppins(
+          titleLarge: GoogleFonts.manrope(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          titleMedium: GoogleFonts.poppins(
+          titleMedium: GoogleFonts.manrope(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          titleSmall: GoogleFonts.poppins(
+          titleSmall: GoogleFonts.manrope(
             fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
 
-          // Body styles
-          bodyLarge: GoogleFonts.poppins(
+          // Body: Work Sans (light and open, good for minimal design)
+          bodyLarge: GoogleFonts.workSans(
             fontSize: 16,
             fontWeight: FontWeight.normal,
-            color: Colors.black87,
+            color: const Color(0xFF424242),
           ),
-          bodyMedium: GoogleFonts.poppins(
+          bodyMedium: GoogleFonts.workSans(
             fontSize: 14,
             fontWeight: FontWeight.normal,
-            color: Colors.black87,
+            color: const Color(0xFF424242),
           ),
-          bodySmall: GoogleFonts.poppins(
+          bodySmall: GoogleFonts.workSans(
             fontSize: 12,
             fontWeight: FontWeight.normal,
-            color: Colors.black54,
+            color: const Color(0xFF757575),
           ),
-
-          // Label styles
-          labelLarge: GoogleFonts.poppins(
+          labelLarge: GoogleFonts.workSans(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          labelMedium: GoogleFonts.poppins(
+          labelMedium: GoogleFonts.workSans(
             fontSize: 12,
             fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            color: const Color(0xFF1A1A1A),
           ),
-          labelSmall: GoogleFonts.poppins(
+          labelSmall: GoogleFonts.workSans(
             fontSize: 10,
             fontWeight: FontWeight.w500,
-            color: Colors.black54,
+            color: const Color(0xFF757575),
           ),
         ),
       ),

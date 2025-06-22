@@ -25,23 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: const Text(
+        backgroundColor: colorScheme.primary,
+        title: Text(
           'SayItWell',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
-            color: Colors.white,
+          style: textTheme.headlineLarge?.copyWith(
+            color: colorScheme.onPrimary,
           ),
         ),
         centerTitle: true,
-        elevation: 1,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none),
+            icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),
             tooltip: 'Notifications',
             onPressed: () {
               // TODO: notification action
@@ -51,9 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: _screens[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black87,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
+        backgroundColor: colorScheme.surface,
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,
         onTap: (index) {
@@ -87,14 +86,19 @@ class HomeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return SingleChildScrollView(
       padding: const EdgeInsets.all(24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             "Today's Exercises",
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            style: textTheme.headlineLarge?.copyWith(
+              color: colorScheme.onSurface,
+            ),
           ),
           const SizedBox(height: 24),
           ExerciseCard(exercise: SampleExercises.exercises[0]),
@@ -102,10 +106,12 @@ class HomeContent extends StatelessWidget {
           ExerciseCard(exercise: SampleExercises.exercises[2]),
           ExerciseCard(exercise: SampleExercises.exercises[3]),
           const SizedBox(height: 24),
-          const Text(
+          Text(
             "Stay consistent and improve your clarity every day.",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, color: Colors.grey),
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurface.withOpacity(0.7),
+            ),
           ),
         ],
       ),
