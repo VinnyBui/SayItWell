@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_splash/flutter_animated_splash.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -9,33 +10,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Future.delayed(const Duration(seconds: 2), () {
-      if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Text(
-          'SayItWell',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 36,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.5,
-          ),
-        ),
-      ),
+    return AnimatedSplash(
+      type: Transition.fade,
+      curve:Curves.fastLinearToSlowEaseIn,
+      navigator:const HomeScreen(),
+      durationInSeconds:2,
+      child:Text("Your Splash"),
     );
   }
 }

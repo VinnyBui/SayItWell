@@ -25,7 +25,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.4.6
-
+  flutter_animated_splash: ^0.0.10
   cupertino_icons: ^1.0.8
 
 dev_dependencies:
@@ -78,10 +78,13 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_native_splash:
-  color: "#ffffff"
+  color: "#FFFFFF"
   android: true
   ios: true
   web: false
 
   android_12:
-    color: "#ffffff"
+    color: "#FFFFFF"
+    android: true
+    ios: true
+    web: false
