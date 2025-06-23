@@ -19,33 +19,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
         title: Text(
           'Settings',
-          style: textTheme.headlineLarge?.copyWith(
-            color: colorScheme.onSurface,
+          style: textTheme.displayLarge?.copyWith(
+            color: colorScheme.primary,
           ),
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.help_outline, color: colorScheme.onSurface),
-            tooltip: 'Help',
-            onPressed: () {
-              // TODO: help action
-            },
-          ),
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Settings",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 24),
             Card(
               child: Column(

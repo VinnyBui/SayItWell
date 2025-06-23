@@ -20,35 +20,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.primary,
         title: Text(
-          'SayItWell',
-          style: textTheme.headlineLarge?.copyWith(
-            color: colorScheme.onPrimary,
+          'Excercises',
+          style: textTheme.displayLarge?.copyWith(
+            color: colorScheme.primary,
           ),
         ),
-        centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),
-            tooltip: 'Notifications',
-            onPressed: () {
-              // TODO: notification action
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),
+          //   tooltip: 'Notifications',
+          //   onPressed: () {
+          //     // TODO: notification action
+          //   },
+          // ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Today's Exercises",
-              style: textTheme.headlineLarge?.copyWith(
-                color: colorScheme.onSurface,
-              ),
-            ),
             const SizedBox(height: 24),
             ExerciseCard(exercise: SampleExercises.exercises[0]),
             ExerciseCard(exercise: SampleExercises.exercises[1]),
@@ -58,9 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               "Stay consistent and improve your clarity every day.",
               textAlign: TextAlign.center,
-              style: textTheme.bodySmall?.copyWith(
-                color: colorScheme.onSurface.withOpacity(0.7),
-              ),
+              style: textTheme.bodySmall?.copyWith(),
             ),
           ],
         ),

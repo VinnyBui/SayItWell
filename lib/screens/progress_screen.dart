@@ -19,40 +19,19 @@ class _ProgressScreenState extends State<ProgressScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.secondary,
         title: Text(
           'Your Progress',
-          style: textTheme.headlineLarge?.copyWith(
-            color: colorScheme.onSecondary,
+          style: textTheme.displayLarge?.copyWith(
+            color: colorScheme.primary,
           ),
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.calendar_today, color: colorScheme.onSecondary),
-            tooltip: 'Calendar',
-            onPressed: () {
-              // TODO: calendar action
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.share, color: colorScheme.onSecondary),
-            tooltip: 'Share Progress',
-            onPressed: () {
-              // TODO: share action
-            },
-          ),
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Your Progress",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 24),
             Card(
               child: Padding(
@@ -120,7 +99,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
         type: BottomNavigationBarType.fixed,
-        currentIndex: 2,
+        currentIndex: 1,
         onTap: (index) {
           if (index == 0) {
             Navigator.pushReplacement(

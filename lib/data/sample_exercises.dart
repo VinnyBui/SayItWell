@@ -4,7 +4,7 @@ class SampleExercises {
   static List<Exercise> exercises = [
     Exercise(
       id: '1',
-      title: 'Tongue Twister Clarity',
+      title: 'Tongue Twister',
       description:
           'Practice clear pronunciation with challenging tongue twisters to improve speech clarity and articulation.',
       type: 'tongue_twister',
@@ -13,7 +13,7 @@ class SampleExercises {
     ),
     Exercise(
       id: '2',
-      title: 'Volume / Projection Drill',
+      title: 'Volume / Projection ',
       description:
           'Learn to project your voice effectively and control volume for better communication in different settings.',
       type: 'volume',
@@ -22,7 +22,7 @@ class SampleExercises {
     ),
     Exercise(
       id: '3',
-      title: 'Slow-Down Drill',
+      title: 'Slow Down ',
       description:
           'Practice speaking at a controlled pace to improve clarity and reduce speech rate issues.',
       type: 'pace',

@@ -19,33 +19,19 @@ class _PremiumScreenState extends State<PremiumScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: colorScheme.tertiary,
         title: Text(
           'Premium Features',
-          style: textTheme.headlineLarge?.copyWith(
-            color: colorScheme.onTertiary,
+          style: textTheme.displayLarge?.copyWith(
+            color: colorScheme.primary,
           ),
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.star, color: colorScheme.onTertiary),
-            tooltip: 'Premium Status',
-            onPressed: () {
-              // TODO: premium status action
-            },
-          ),
-        ],
+        actions: [],
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Premium Features",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
             const SizedBox(height: 24),
             Card(
               child: Padding(
