@@ -18,9 +18,12 @@ class _PremiumScreenState extends State<PremiumScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 100,
         title: Text(
-          'Premium Features',
+          'Premium',
           style: textTheme.displayLarge?.copyWith(
             color: colorScheme.primary,
           ),
@@ -28,7 +31,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
         actions: [],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -86,9 +89,9 @@ class _PremiumScreenState extends State<PremiumScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: colorScheme.surface,
+        backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
+        unselectedItemColor: colorScheme.onSurface,
         type: BottomNavigationBarType.fixed,
         currentIndex: 2,
         onTap: (index) {

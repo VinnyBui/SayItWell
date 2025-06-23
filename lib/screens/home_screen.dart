@@ -22,13 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        toolbarHeight: 100,
         title: Text(
           'Excercises',
           style: textTheme.displayLarge?.copyWith(
             color: colorScheme.primary,
           ),
         ),
-        toolbarHeight: 100,
         actions: [
           // IconButton(
           //   icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),

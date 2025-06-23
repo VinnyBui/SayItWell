@@ -18,7 +18,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 100,
         title: Text(
           'Your Progress',
           style: textTheme.displayLarge?.copyWith(
@@ -28,7 +31,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
         actions: [],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -95,9 +98,9 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: colorScheme.surface,
+        backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
+        unselectedItemColor: colorScheme.onSurface,
         type: BottomNavigationBarType.fixed,
         currentIndex: 1,
         onTap: (index) {
