@@ -4,6 +4,7 @@ import '../data/sample_exercises.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
 import 'settings_screen.dart';
+import 'exercise_start_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -59,7 +60,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 physics: const BouncingScrollPhysics(),
                 children:
                     SampleExercises.exercises
-                        .map((exercise) => ExerciseCard(exercise: exercise))
+                        .map(
+                          (exercise) => ExerciseCard(
+                            exercise: exercise,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) => ExerciseStartScreen(
+                                        exercise: exercise,
+                                      ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
                         .toList(),
               ),
             ),
