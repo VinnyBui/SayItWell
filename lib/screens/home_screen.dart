@@ -36,29 +36,33 @@ class _HomeScreenState extends State<HomeScreen> {
           // ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 24),
-            ExerciseCard(exercise: SampleExercises.exercises[0]),
-            ExerciseCard(exercise: SampleExercises.exercises[1]),
-            ExerciseCard(exercise: SampleExercises.exercises[2]),
-            ExerciseCard(exercise: SampleExercises.exercises[3]),
-            const SizedBox(height: 24),
-            Text(
-              "Stay consistent and improve your clarity every day.",
-              textAlign: TextAlign.center,
-              style: textTheme.bodySmall?.copyWith(),
+            const SizedBox(height: 24), // your top spacing
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 3/5,
+                physics: const BouncingScrollPhysics(),
+                children: SampleExercises.exercises
+                    .map((exercise) => ExerciseCard(exercise: exercise))
+                    .toList(),
+              ),
             ),
           ],
         ),
       ),
+
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: colorScheme.surface,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
+        unselectedItemColor: colorScheme.onSurface,
         type: BottomNavigationBarType.fixed,
         currentIndex: 0,
         onTap: (index) {
