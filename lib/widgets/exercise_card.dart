@@ -15,7 +15,11 @@ class ExerciseCard extends StatelessWidget {
     Icon getIcon() {
       switch (exercise.title) {
         case 'Tongue Twister':
-          return Icon(Icons.speaker_notes, color: colorScheme.primary, size: 40);
+          return Icon(
+            Icons.speaker_notes,
+            color: colorScheme.primary,
+            size: 40,
+          );
         case 'Volume Control':
           return Icon(Icons.volume_up, color: colorScheme.secondary, size: 40);
         case 'Slow Down':
@@ -26,13 +30,12 @@ class ExerciseCard extends StatelessWidget {
           return const Icon(Icons.fitness_center, color: Colors.grey, size: 40);
       }
     }
+
     return Container(
       margin: const EdgeInsets.only(bottom: 15.0),
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 3,
         child: InkWell(
           onTap: onTap,

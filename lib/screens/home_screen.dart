@@ -25,9 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: 100,
         title: Text(
           'Excercises',
-          style: textTheme.displayLarge?.copyWith(
-            color: colorScheme.primary,
-          ),
+          style: textTheme.displayLarge?.copyWith(color: colorScheme.primary),
         ),
         actions: [
           // IconButton(
@@ -50,97 +48,105 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: 3/5,
+                childAspectRatio: 3 / 5,
                 physics: const BouncingScrollPhysics(),
-                children: SampleExercises.exercises
-                    .map((exercise) => ExerciseCard(exercise: exercise))
-                    .toList(),
+                children:
+                    SampleExercises.exercises
+                        .map((exercise) => ExerciseCard(exercise: exercise))
+                        .toList(),
               ),
             ),
             const SizedBox(height: 24),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.secondary,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 0,
-        onTap: (index) {
-          if (index == 0) {
-            // Already on home screen
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                        const ProgressScreen(),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                        const PremiumScreen(),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                        const SettingsScreen(),
-                transitionsBuilder: (
-                  context,
-                  animation,
-                  secondaryAnimation,
-                  child,
-                ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Progress',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: const Color(0xFFE0E0E0), width: 1.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.workspace_premium),
-            label: 'Premium',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          selectedItemColor: colorScheme.primary,
+          unselectedItemColor: Colors.black45,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 0,
+          onTap: (index) {
+            if (index == 0) {
+              // Already on home screen
+            } else if (index == 1) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const ProgressScreen(),
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            } else if (index == 2) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const PremiumScreen(),
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            } else if (index == 3) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const SettingsScreen(),
+                  transitionsBuilder: (
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Progress',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.workspace_premium),
+              label: 'Premium',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -11,7 +11,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -24,9 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         toolbarHeight: 100,
         title: Text(
           'Settings',
-          style: textTheme.displayLarge?.copyWith(
-            color: colorScheme.primary,
-          ),
+          style: textTheme.displayLarge?.copyWith(color: colorScheme.primary),
         ),
         actions: [],
       ),
@@ -93,86 +90,93 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.secondary,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 3,
-        onTap: (index) {
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                const HomeScreen(),
-                transitionsBuilder: (
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Colors.grey.shade300, width: 1.0),
+          ),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          selectedItemColor: colorScheme.primary,
+          unselectedItemColor: Colors.black45,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: 3,
+          onTap: (index) {
+            if (index == 0) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const HomeScreen(),
+                  transitionsBuilder: (
                     context,
                     animation,
                     secondaryAnimation,
                     child,
-                    ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                const ProgressScreen(),
-                transitionsBuilder: (
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            } else if (index == 1) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const ProgressScreen(),
+                  transitionsBuilder: (
                     context,
                     animation,
                     secondaryAnimation,
                     child,
-                    ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder:
-                    (context, animation, secondaryAnimation) =>
-                const PremiumScreen(),
-                transitionsBuilder: (
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            } else if (index == 2) {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const PremiumScreen(),
+                  transitionsBuilder: (
                     context,
                     animation,
                     secondaryAnimation,
                     child,
-                    ) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-                transitionDuration: const Duration(milliseconds: 200),
-              ),
-            );
-          } else if (index == 3) {
-            // Already on settings screen
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: 'Progress',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.workspace_premium),
-            label: 'Premium',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+                  ) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
+                  transitionDuration: const Duration(milliseconds: 200),
+                ),
+              );
+            } else if (index == 3) {
+              // Already on settings screen
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Progress',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.workspace_premium),
+              label: 'Premium',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Settings',
+            ),
+          ],
+        ),
       ),
     );
   }
