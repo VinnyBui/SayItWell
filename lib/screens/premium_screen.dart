@@ -91,7 +91,7 @@ class _PremiumScreenState extends State<PremiumScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface,
+        unselectedItemColor: colorScheme.secondary,
         type: BottomNavigationBarType.fixed,
         currentIndex: 2,
         onTap: (index) {

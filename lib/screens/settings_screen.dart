@@ -96,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface,
+        unselectedItemColor: colorScheme.secondary,
         type: BottomNavigationBarType.fixed,
         currentIndex: 3,
         onTap: (index) {

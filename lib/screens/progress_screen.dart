@@ -100,7 +100,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
-        unselectedItemColor: colorScheme.onSurface,
+        unselectedItemColor: colorScheme.secondary,
         type: BottomNavigationBarType.fixed,
         currentIndex: 1,
         onTap: (index) {
