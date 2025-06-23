@@ -19,13 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           'Excercises',
           style: textTheme.displayLarge?.copyWith(
             color: colorScheme.primary,
           ),
         ),
+        toolbarHeight: 100,
         actions: [
           // IconButton(
           //   icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),
@@ -37,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -54,13 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     .toList(),
               ),
             ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
-
-
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: colorScheme.surface,
+        backgroundColor: Colors.white,
         selectedItemColor: colorScheme.primary,
         unselectedItemColor: colorScheme.onSurface,
         type: BottomNavigationBarType.fixed,

@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ).copyWith(
           displayLarge: GoogleFonts.merriweather(
-            fontSize: 32,
+            fontSize: 44,
             fontWeight: FontWeight.bold,
             color: const Color(0xFF1A1A1A),
           ),

@@ -12,57 +12,61 @@ class ExerciseCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    Color getCardColor(String title) {
-      switch (title) {
-        case 'Tongue Twister Clarity':
-          return colorScheme.secondary; // Coral
-        case 'Volume/Projection Drill':
-          return Color(0xFFFFC107); // Teal
-        case 'Slow-Down Drill':
-          return const Color(0xFFFFC107); // Soft Purple
+    Icon getIcon() {
+      switch (exercise.title) {
+        case 'Tongue Twister':
+          return Icon(Icons.speaker_notes, color: colorScheme.primary);
+        case 'Volume / Projection':
+          return Icon(Icons.volume_up, color: colorScheme.secondary);
+        case 'Slow Down':
+          return Icon(Icons.timer, color: colorScheme.tertiary);
         case 'Repeat After Me':
-          return Color(0xFFFDD835); // Yellow
+          return Icon(Icons.repeat, color: colorScheme.onSurface);
         default:
-          return Theme.of(context).colorScheme.primary.withOpacity(0.1); // Fallback
+          return const Icon(Icons.fitness_center, color: Colors.grey);
       }
     }
-
     return Container(
       margin: const EdgeInsets.only(bottom: 15.0),
       padding: const EdgeInsets.only(bottom: 10),
       child: Card(
-        color: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        elevation: 1,
+        elevation: 3,
         child: InkWell(
           onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  exercise.title,
-                  style: textTheme.headlineMedium?.copyWith(),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  exercise.description,
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: Colors.black54,
+            child: Center(
+              child: Column(
+                //will shrink to fit only the space needed by its children (i.e. just enough height to wrap the content).
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  getIcon(),
+                  const SizedBox(height: 8),
+                  Text(
+                    exercise.title,
+                    style: textTheme.headlineMedium?.copyWith(),
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${exercise.duration} min',
-                  style: textTheme.bodySmall?.copyWith(),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Text(
+                    exercise.description,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: Colors.black54,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '${exercise.duration} min',
+                    style: textTheme.bodySmall?.copyWith(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
