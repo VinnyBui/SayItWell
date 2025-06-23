@@ -28,13 +28,20 @@ class _HomeScreenState extends State<HomeScreen> {
           style: textTheme.displayLarge?.copyWith(color: colorScheme.primary),
         ),
         actions: [
-          // IconButton(
-          //   icon: Icon(Icons.notifications_none, color: colorScheme.onPrimary),
-          //   tooltip: 'Notifications',
-          //   onPressed: () {
-          //     // TODO: notification action
-          //   },
-          // ),
+          Padding(
+            padding: const EdgeInsets.only(right: 16),
+            child: IconButton(
+              icon: Icon(
+                Icons.calendar_month,
+                color: colorScheme.primary,
+                size: 30,
+              ),
+              tooltip: 'Calendar',
+              onPressed: () {
+                // TODO: Calendar action
+              },
+            ),
+          ),
         ],
       ),
       body: Padding(
