@@ -15,15 +15,15 @@ class ExerciseCard extends StatelessWidget {
     Icon getIcon() {
       switch (exercise.title) {
         case 'Tongue Twister':
-          return Icon(Icons.speaker_notes, color: colorScheme.primary);
-        case 'Volume / Projection':
-          return Icon(Icons.volume_up, color: colorScheme.secondary);
+          return Icon(Icons.speaker_notes, color: colorScheme.primary, size: 40);
+        case 'Volume Control':
+          return Icon(Icons.volume_up, color: colorScheme.secondary, size: 40);
         case 'Slow Down':
-          return Icon(Icons.timer, color: colorScheme.tertiary);
+          return Icon(Icons.timer, color: colorScheme.tertiary, size: 40);
         case 'Repeat After Me':
-          return Icon(Icons.repeat, color: colorScheme.onSurface);
+          return Icon(Icons.repeat, color: colorScheme.onSurface, size: 40);
         default:
-          return const Icon(Icons.fitness_center, color: Colors.grey);
+          return const Icon(Icons.fitness_center, color: Colors.grey, size: 40);
       }
     }
     return Container(

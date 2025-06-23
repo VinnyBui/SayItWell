@@ -13,7 +13,7 @@ class SampleExercises {
     ),
     Exercise(
       id: '2',
-      title: 'Volume / Projection',
+      title: 'Volume Control',
       description:
           'Learn to project your voice effectively and control volume for better communication in different settings.',
       type: 'volume',
