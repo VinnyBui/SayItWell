@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/exercise_card.dart';
-import '../data/sample_exercises.dart';
+import '../../widgets/exercise_card.dart';
+import '../../data/sample_exercises.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
 import 'settings_screen.dart';

@@ -1,3 +1,4 @@
 {
-  "dart.flutterSdkPath": "C:\\flutter\\src\\flutter_windows_3.29.3-stable\\flutter"
+  "dart.flutterSdkPath": "C:\\flutter\\src\\flutter_windows_3.29.3-stable\\flutter",
+  "svn.ignoreMissingSvnWarning": true
 }

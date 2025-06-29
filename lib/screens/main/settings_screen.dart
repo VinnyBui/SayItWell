@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../services/auth_service.dart';
 import 'home_screen.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
@@ -11,6 +12,24 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  final _authService = AuthService();
+
+  Future<void> _logout() async {
+    try {
+      await _authService.signOut();
+      // Navigation will be handled by AuthWrapper
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error logging out: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -83,6 +102,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     onTap: () {
                       // TODO: Navigate to about screen
                     },
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.logout, color: Colors.red),
+                    title: const Text(
+                      "Logout",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onTap: _logout,
                   ),
                 ],
               ),

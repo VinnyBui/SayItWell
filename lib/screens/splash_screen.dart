@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:lottie/lottie.dart';
-import 'home_screen.dart';
+import 'auth/auth_wrapper.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Lottie.asset('assets/animations/animation.json'),
-      nextScreen: const HomeScreen(),
+      nextScreen: const AuthWrapper(),
       splashIconSize: 200,
       duration: 3000,
       splashTransition: SplashTransition.fadeTransition,

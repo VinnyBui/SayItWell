@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/exercise.dart';
+import '../../models/exercise.dart';
 
 class ExerciseStartScreen extends StatefulWidget {
   final Exercise exercise;
