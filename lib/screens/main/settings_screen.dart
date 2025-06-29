@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
+import '../auth/login_screen.dart';
 import 'home_screen.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
@@ -17,7 +18,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _logout() async {
     try {
       await _authService.signOut();
-      // Navigation will be handled by AuthWrapper
+      
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
