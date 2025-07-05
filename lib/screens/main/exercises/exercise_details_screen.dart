@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/exercise.dart';
+import '../../../models/exercise.dart';
+import 'exercise_session_screen.dart';
 
 class ExerciseStartScreen extends StatefulWidget {
   final Exercise exercise;
@@ -211,13 +212,12 @@ class _ExerciseStartScreenState extends State<ExerciseStartScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // TODO: Start the exercise
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Starting ${widget.exercise.title}...',
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ExerciseSessionScreen(
+                              exercise: widget.exercise,
                             ),
-                            backgroundColor: colorScheme.primary,
                           ),
                         );
                       },

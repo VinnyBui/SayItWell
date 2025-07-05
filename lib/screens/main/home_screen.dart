@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../widgets/exercise_card.dart';
-import '../../data/sample_exercises.dart';
+import '../../services/ai_service.dart';
+import '../../models/exercise.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
 import 'settings_screen.dart';
-import 'exercise_start_screen.dart';
+import 'exercises/exercise_details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +15,44 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AIService _aiService = AIService();
+  List<Exercise> _dailyExercises = [];
+  bool _isLoading = true;
+  String? _error;
+
+  @override
+  void initState() {
+    super.initState();
+    _generateDailyExercises();
+  }
+
+  Future<void> _generateDailyExercises() async {
+    setState(() {
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      // Generate all four types of exercises
+      final exercises = await Future.wait([
+        _aiService.generateTongueTwister(),
+        _aiService.generateVolumeControl(),
+        _aiService.generateSlowDown(),
+        _aiService.generateRepeatAfterMe(),
+      ]);
+
+      setState(() {
+        _dailyExercises = exercises;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = 'Failed to generate exercises: ${e.toString()}';
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -50,35 +89,75 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 24), // your top spacing
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 3 / 5,
-                physics: const BouncingScrollPhysics(),
-                children:
-                    SampleExercises.exercises
-                        .map(
-                          (exercise) => ExerciseCard(
-                            exercise: exercise,
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => ExerciseStartScreen(
-                                        exercise: exercise,
-                                      ),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                        .toList(),
+            const SizedBox(height: 24),
+            if (_isLoading)
+              const Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text('Generating your daily exercises...'),
+                    ],
+                  ),
+                ),
+              )
+            else if (_error != null)
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Colors.red[300],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        _error!,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: _generateDailyExercises,
+                        child: const Text('Try Again'),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            else
+              Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 3 / 5,
+                  physics: const BouncingScrollPhysics(),
+                  children:
+                      _dailyExercises
+                          .map(
+                            (exercise) => ExerciseCard(
+                              exercise: exercise,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => ExerciseStartScreen(
+                                          exercise: exercise,
+                                        ),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                          .toList(),
+                ),
               ),
-            ),
             const SizedBox(height: 24),
           ],
         ),
