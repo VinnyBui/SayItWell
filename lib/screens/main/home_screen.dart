@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../widgets/exercise_card.dart';
 import '../../services/ai_service.dart';
+import '../../services/firestore_service.dart';
 import '../../models/exercise.dart';
 import 'progress_screen.dart';
 import 'premium_screen.dart';
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final AIService _aiService = AIService();
+  final FirestoreService _firestoreService = FirestoreService();
   List<Exercise> _dailyExercises = [];
   bool _isLoading = true;
   String? _error;
@@ -23,23 +25,45 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _generateDailyExercises();
+    _loadDailyExercises();
   }
 
-  Future<void> _generateDailyExercises() async {
+  Future<void> _loadDailyExercises() async {
     setState(() {
       _isLoading = true;
       _error = null;
     });
 
     try {
-      // Generate all four types of exercises
+      final existingExercises =
+          await _firestoreService.getTodaysDailyExercises();
+
+      if (existingExercises != null && existingExercises.isNotEmpty) {
+        setState(() {
+          _dailyExercises = existingExercises;
+          _isLoading = false;
+        });
+      } else {
+        await _generateDailyExercises();
+      }
+    } catch (e) {
+      setState(() {
+        _error = 'Failed to load exercises: ${e.toString()}';
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _generateDailyExercises() async {
+    try {
       final exercises = await Future.wait([
         _aiService.generateTongueTwister(),
         _aiService.generateVolumeControl(),
         _aiService.generateSlowDown(),
         _aiService.generateRepeatAfterMe(),
       ]);
+
+      await _firestoreService.saveDailyExercises(exercises);
 
       setState(() {
         _dailyExercises = exercises;
@@ -98,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 16),
-                      Text('Generating your daily exercises...'),
+                      Text('Loading your daily exercises...'),
                     ],
                   ),
                 ),
@@ -122,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: _generateDailyExercises,
+                        onPressed: _loadDailyExercises,
                         child: const Text('Try Again'),
                       ),
                     ],
