@@ -20,45 +20,43 @@ class FirestoreService {
     });
   }
 
-  // Save daily exercises for current user
   Future<void> saveDailyExercises(List<Exercise> exercises) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
     final today = DateTime.now();
     final dateKey =
-      '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
     await _firestore
-      .collection('users')
-      .doc(user.uid)
-      .collection('daily_exercises')
-      .doc() // Auto-generated ID
-      .set({
-        'exercises': exercises.map((e) => e.toMap()).toList(),
-        'createdAt': FieldValue.serverTimestamp(),
-        'date': dateKey,
-        'userId': user.uid,
-      });
+        .collection('users')
+        .doc(user.uid)
+        .collection('daily_exercises')
+        .doc() // Auto-generated ID
+        .set({
+          'exercises': exercises.map((e) => e.toMap()).toList(),
+          'createdAt': FieldValue.serverTimestamp(),
+          'date': dateKey,
+          'userId': user.uid,
+        });
   }
 
-  // Get daily exercises for current user and today's date
   Future<List<Exercise>?> getTodaysDailyExercises() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return null;
 
     final today = DateTime.now();
     final dateKey =
-      '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
     final querySnapshot =
-      await _firestore
-        .collection('users')
-        .doc(user.uid)
-        .collection('daily_exercises')
-        .where('date', isEqualTo: dateKey)
-        .limit(1)
-        .get();
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('daily_exercises')
+            .where('date', isEqualTo: dateKey)
+            .limit(1)
+            .get();
 
     if (querySnapshot.docs.isEmpty) return null;
 
@@ -67,10 +65,46 @@ class FirestoreService {
 
     final exercisesList = data['exercises'] as List<dynamic>;
     return exercisesList
-      .map(
-        (exerciseMap) =>
-            Exercise.fromMap(exerciseMap as Map<String, dynamic>),
-      )
-      .toList();
+        .map(
+          (exerciseMap) =>
+              Exercise.fromMap(exerciseMap as Map<String, dynamic>),
+        )
+        .toList();
+  }
+
+  Future<void> markExerciseAsCompleted(String exerciseId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final today = DateTime.now();
+    final dateKey =
+        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+
+    // Get today's exercises document
+    final querySnapshot =
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('daily_exercises')
+            .where('date', isEqualTo: dateKey)
+            .limit(1)
+            .get();
+
+    if (querySnapshot.docs.isEmpty) return;
+
+    final doc = querySnapshot.docs.first;
+    final data = doc.data();
+    final exercises = List<Map<String, dynamic>>.from(data['exercises'] ?? []);
+
+    // Find and update the specific exercise
+    for (int i = 0; i < exercises.length; i++) {
+      if (exercises[i]['id'] == exerciseId) {
+        exercises[i]['completed'] = true;
+        break;
+      }
+    }
+
+    // Update the document
+    await doc.reference.update({'exercises': exercises});
   }
 }
