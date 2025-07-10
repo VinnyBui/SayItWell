@@ -55,13 +55,8 @@ class AIService {
   }
 
   Future<Exercise> generateVolumeControl() async {
-    // Throw error if OpenAI is not available
-    if (_openAI == null) {
-      throw Exception('AI service not available');
-    }
-
     String userPrompt =
-        'Create a volume control exercise. Return your response in this exact format:\n\nDESCRIPTION: [Brief explanation of what this exercise helps with]\n\nCONTENT: [A meaningful paragraph of 4-6 sentences that users should practice reading at different volumes]';
+        'Create a volume control exercise. Return your response in this exact format:\n\nDESCRIPTION: [Brief explanation of what this exercise helps with]\n\nCONTENT: [A meaningful paragraph of 2-3 sentences that users should practice reading at different volumes]';
 
     final request = ChatCompleteText(
       messages: [

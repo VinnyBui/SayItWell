@@ -41,28 +41,19 @@ class ExerciseSessionViewCard extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey[200]!),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.record_voice_over,
-                      size: 48,
-                      color: _getGradientColors()[0],
+                child: Center(
+                  child: Text(
+                    exercise.content,
+                    style: textTheme.headlineMedium?.copyWith(
+                      color: Colors.black87,
+                      height: 1.4,
+                      fontSize: 28,
                     ),
-                    const SizedBox(height: 24),
-                    Text(
-                      exercise.content,
-                      style: textTheme.headlineSmall?.copyWith(
-                        color: Colors.black87,
-                        height: 1.4,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
