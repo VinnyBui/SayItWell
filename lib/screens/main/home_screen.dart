@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/exercise_card.dart';
+import '../../widgets/calendar_modal.dart';
 import '../../services/ai_service.dart';
 import '../../services/firestore_service.dart';
 import '../../models/exercise.dart';
@@ -21,11 +22,15 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Exercise> _dailyExercises = [];
   bool _isLoading = true;
   String? _error;
+  DateTime _selectedDate = DateTime.now();
+  DateTime _focusedDate = DateTime.now();
+  DateTime? _userAccountCreationDate;
 
   @override
   void initState() {
     super.initState();
     _loadDailyExercises();
+    _loadUserAccountCreationDate();
   }
 
   Future<void> _loadDailyExercises() async {
@@ -77,6 +82,49 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _loadUserAccountCreationDate() async {
+    try {
+      final creationDate = await _firestoreService.getUserAccountCreationDate();
+      setState(() {
+        _userAccountCreationDate = creationDate;
+      });
+    } catch (e) {
+      print('Failed to load user account creation date: $e');
+    }
+  }
+
+  void _showCalendarModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return CalendarModal(
+          initialDate: _selectedDate,
+          onDateSelected: _loadExercisesForDate,
+          firstDay: _userAccountCreationDate,
+        );
+      },
+    );
+  }
+
+  Future<void> _loadExercisesForDate(DateTime selectedDate) async {
+    setState(() {
+      _selectedDate = selectedDate;
+      _isLoading = true;
+      _error = null;
+    });
+
+    try {
+      await _loadDailyExercises();
+    } catch (e) {
+      setState(() {
+        _error = 'Failed to load exercises for selected date: ${e.toString()}';
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -101,9 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 size: 30,
               ),
               tooltip: 'Calendar',
-              onPressed: () {
-                // TODO: Calendar action
-              },
+              onPressed: _showCalendarModal,
             ),
           ),
         ],
