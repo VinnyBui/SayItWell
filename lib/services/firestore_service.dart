@@ -47,29 +47,35 @@ class FirestoreService {
 
     final today = DateTime.now();
     final dateKey =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+      '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
 
     final querySnapshot =
-        await _firestore
-            .collection('users')
-            .doc(user.uid)
-            .collection('daily_exercises')
-            .where('date', isEqualTo: dateKey)
-            .limit(1)
-            .get();
+      await _firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('daily_exercises')
+        .where('date', isEqualTo: dateKey)
+        .limit(
+          1,
+        ) // Optimization: Only return 1 document since we expect exactly
+        // one set of exercises per day per user. Stops scanning after
+        // the first match, reducing Firestore reads and improving performance.
+        .get();
 
     if (querySnapshot.docs.isEmpty) return null;
 
-    final data = querySnapshot.docs.first.data();
+    final data =
+      querySnapshot.docs.first
+        .data(); // Extract the single document from the list - Firestore always returns a list even with limit(1)
     if (data['exercises'] == null) return null;
 
     final exercisesList = data['exercises'] as List<dynamic>;
     return exercisesList
-        .map(
-          (exerciseMap) =>
-              Exercise.fromMap(exerciseMap as Map<String, dynamic>),
-        )
-        .toList();
+      .map(
+        (exerciseMap) =>
+          Exercise.fromMap(exerciseMap as Map<String, dynamic>),
+      )
+      .toList();
   }
 
   Future<void> markExerciseAsCompleted(String exerciseId) async {
