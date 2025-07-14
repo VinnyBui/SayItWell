@@ -20,13 +20,15 @@ class FirestoreService {
     });
   }
 
-  Future<void> saveDailyExercises(List<Exercise> exercises) async {
+  Future<void> saveDailyExercises(
+    List<Exercise> exercises,
+    DateTime date,
+  ) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final today = DateTime.now();
     final dateKey =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
     await _firestore
         .collection('users')
@@ -41,13 +43,12 @@ class FirestoreService {
         });
   }
 
-  Future<List<Exercise>?> getTodaysDailyExercises() async {
+  Future<List<Exercise>?> getDailyExercisesForDate(DateTime date) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return null;
 
-    final today = DateTime.now();
     final dateKey =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
     final querySnapshot =
         await _firestore
@@ -55,18 +56,12 @@ class FirestoreService {
             .doc(user.uid)
             .collection('daily_exercises')
             .where('date', isEqualTo: dateKey)
-            .limit(
-              1,
-            ) // Optimization: Only return 1 document since we expect exactly
-            // one set of exercises per day per user. Stops scanning after
-            // the first match, reducing Firestore reads and improving performance.
+            .limit(1)
             .get();
 
     if (querySnapshot.docs.isEmpty) return null;
 
-    final data =
-        querySnapshot.docs.first
-            .data(); // Extract the single document from the list - Firestore always returns a list even with limit(1)
+    final data = querySnapshot.docs.first.data();
     if (data['exercises'] == null) return null;
 
     final exercisesList = data['exercises'] as List<dynamic>;
@@ -78,15 +73,14 @@ class FirestoreService {
         .toList();
   }
 
-  Future<void> markExerciseAsCompleted(String exerciseId) async {
+  Future<void> markExerciseAsCompleted(String exerciseId, DateTime date) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final today = DateTime.now();
     final dateKey =
-        '${today.year}-${today.month.toString().padLeft(2, '0')}-${today.day.toString().padLeft(2, '0')}';
+        '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
-    // Get today's exercises document
+    // Get the exercises document for the specified date
     final querySnapshot =
         await _firestore
             .collection('users')

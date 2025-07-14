@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
   String? _error;
   DateTime _selectedDate = DateTime.now();
-  DateTime _focusedDate = DateTime.now();
   DateTime? _userAccountCreationDate;
 
   @override
@@ -40,9 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final existingExercises =
-          await _firestoreService.getTodaysDailyExercises();
-
+      final existingExercises = await _firestoreService
+          .getDailyExercisesForDate(_selectedDate);
       if (existingExercises != null && existingExercises.isNotEmpty) {
         setState(() {
           _dailyExercises = existingExercises;
@@ -68,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
         _aiService.generateRepeatAfterMe(),
       ]);
 
-      await _firestoreService.saveDailyExercises(exercises);
+      await _firestoreService.saveDailyExercises(exercises, _selectedDate);
 
       setState(() {
         _dailyExercises = exercises;
@@ -111,18 +109,35 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadExercisesForDate(DateTime selectedDate) async {
     setState(() {
       _selectedDate = selectedDate;
-      _isLoading = true;
-      _error = null;
     });
 
-    try {
-      await _loadDailyExercises();
-    } catch (e) {
-      setState(() {
-        _error = 'Failed to load exercises for selected date: ${e.toString()}';
-        _isLoading = false;
-      });
-    }
+    // Load exercises for the selected date
+    await _loadDailyExercises();
+  }
+
+  bool _isToday() {
+    final today = DateTime.now();
+    return _selectedDate.year == today.year &&
+        _selectedDate.month == today.month &&
+        _selectedDate.day == today.day;
+  }
+
+  String _formatDate(DateTime date) {
+    final months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
 
   @override
@@ -159,6 +174,39 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Display selected date
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: colorScheme.primary.withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.calendar_today,
+                    color: colorScheme.primary,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    _isToday()
+                        ? 'Today\'s Exercises'
+                        : 'Exercises for ${_formatDate(_selectedDate)}',
+                    style: textTheme.titleMedium?.copyWith(
+                      color: colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 24),
             if (_isLoading)
               const Expanded(
