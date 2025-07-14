@@ -31,7 +31,7 @@ class _CalendarModalState extends State<CalendarModal> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.5,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -51,36 +51,41 @@ class _CalendarModalState extends State<CalendarModal> {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          // Title
-          Text(
-            'Select Date',
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 20),
           // Calendar
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TableCalendar(
-                firstDay: widget.firstDay ?? DateTime.utc(2025, 1, 1),
+                firstDay: DateTime(
+                  DateTime.now().year,
+                  DateTime.now().month,
+                  1,
+                ),
                 lastDay: DateTime.now(),
                 focusedDay: _focusedDate,
                 selectedDayPredicate: (day) {
                   return isSameDay(_selectedDate, day);
                 },
                 enabledDayPredicate: (day) {
-                  // Only enable dates that are today or in the past
-                  return day.isBefore(
-                    DateTime.now().add(const Duration(days: 1)),
-                  );
+                  final now = DateTime.now();
+                  final firstDayOfMonth = DateTime(now.year, now.month, 1);
+
+                  // Only enable dates that are:
+                  // 1. In the current month
+                  // 2. From the start of the month to today
+                  return day.isAfter(
+                        firstDayOfMonth.subtract(const Duration(days: 1)),
+                      ) &&
+                      day.isBefore(now.add(const Duration(days: 1))) &&
+                      day.month == now.month &&
+                      day.year == now.year;
                 },
                 onDaySelected: (selectedDay, focusedDay) {
-                  // Only allow selection if the day is today or in the past
-                  if (selectedDay.isBefore(
-                    DateTime.now().add(const Duration(days: 1)),
-                  )) {
+                  final now = DateTime.now();
+                  // Only allow selection if the day is in current month and today or in the past
+                  if (selectedDay.month == now.month &&
+                      selectedDay.year == now.year &&
+                      selectedDay.isBefore(now.add(const Duration(days: 1)))) {
                     setState(() {
                       _selectedDate = selectedDay;
                       _focusedDate = focusedDay;
@@ -128,34 +133,9 @@ class _CalendarModalState extends State<CalendarModal> {
                 headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   titleCentered: true,
-                  leftChevronIcon: Icon(
-                    Icons.chevron_left,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  rightChevronIcon: Icon(
-                    Icons.chevron_right,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  leftChevronVisible: false,
+                  rightChevronVisible: false,
                 ),
-              ),
-            ),
-          ),
-          // Close button
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text('Close'),
               ),
             ),
           ),
